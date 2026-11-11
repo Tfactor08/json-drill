@@ -114,12 +114,26 @@ float ScreenX(float x)
     return (x / timeSpan) * (WIDTH - 2*PLOT_MARGIN) + PLOT_MARGIN;
 }
 
-void RenderAxis(void)
+void RenderAxes(void)
 {
-    // Vertical
+    // Vertical Axis
     DrawLine(PLOT_MARGIN, HEIGHT-PLOT_MARGIN, PLOT_MARGIN, PLOT_MARGIN, WHITE);    
-    // Horizontal
+    // Horizontal Axis
     DrawLine(PLOT_MARGIN, HEIGHT-PLOT_MARGIN, WIDTH-PLOT_MARGIN, HEIGHT-PLOT_MARGIN, WHITE);    
+    // Top arrow
+    DrawTriangle(
+        (Vector2) { PLOT_MARGIN, PLOT_MARGIN },
+        (Vector2) { PLOT_MARGIN-6, PLOT_MARGIN+10 },
+        (Vector2) { PLOT_MARGIN+6, PLOT_MARGIN+10  },
+        WHITE
+    );
+    // Right arrow
+    DrawTriangle(
+        (Vector2) { WIDTH-PLOT_MARGIN, HEIGHT-PLOT_MARGIN },
+        (Vector2) { WIDTH-PLOT_MARGIN-10, HEIGHT-PLOT_MARGIN-6 },
+        (Vector2) { WIDTH-PLOT_MARGIN-10, HEIGHT-PLOT_MARGIN+6  },
+        WHITE
+    );
 }
 
 void SetPointsScreenCoords(void)
@@ -412,7 +426,7 @@ void HandleRenderState(void)
         renderState = (renderState + 1) % __renderStateCount;
     }
     if (renderState == STATE_PLOT) {
-        RenderAxis();
+        RenderAxes();
         RenderPlot();
         RenderInvalidPoints();
         ProcessPoints();
